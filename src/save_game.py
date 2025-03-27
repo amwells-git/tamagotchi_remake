@@ -15,9 +15,10 @@ def load_game():
             return json.load(save_file)
 
 # function creates new game, saves it, then returns it
-def new_game():
+def create_new_game():
     # define NEW game data
     game_data = gc.GAME_INIT_DATA
+    game_data['start_time'] = time.monotonic()
 
     save_game(game_data)
     return game_data

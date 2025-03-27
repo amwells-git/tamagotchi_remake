@@ -57,3 +57,13 @@ def display_tama(dis, game_data, current_display, stage_images, stat_images, FON
         elif current_display == 5: # show weight
             dis.blit(FONT.render(f"WEIGHT: {game_data['weight']} lbs", 1, (0, 0, 0)),
                          (gc.STAT_ROW_POSITION[0], gc.STAT_ROW_POSITION[1]))
+
+# display sickness icon
+def display_sick(dis, game_data, condition_images, position):
+    if game_data['light'] and game_data['sick'] > 0:
+        dis.blit(condition_images['sick'], (position[0], position[1] + gc.BTN_SIZE + 10))
+
+# display poo
+def display_poo(dis, game_data, condition_images):
+    # TODO: Randomize poo location on screen between button rows
+    pass

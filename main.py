@@ -19,7 +19,7 @@ game_data = gc.GAME_INIT_DATA
 if not os.path.exists(gc.SAVE_FILE):
     save_game(game_data) # create save file
 else:
-    game_data = load_game()
+    game_data = load_game() # load save file
 
 # time since program start
 game_data['start_time'] = time.monotonic()
@@ -33,6 +33,7 @@ game_data['start_time'] = time.monotonic()
 # 5 is show weight
 current_display = 0
 
+# function to update elapsed time / active life span of tamagotchi
 def update_elapsed_time():
     global game_data
 
@@ -52,6 +53,7 @@ run = True
 btn_images = image_load.get_btn_images()
 stage_images = image_load.get_stage_images(game_data['teen_ver'], game_data['adult_ver'])
 stat_images = image_load.get_stat_images()
+condition_images = image_load.get_condition_images()
 # font
 GAME_FONT = pygame.font.SysFont(gc.FONT_STYLE, gc.FONT_SIZE)
 
@@ -87,6 +89,9 @@ while run:
     # update elapsed time
     update_elapsed_time()
 
+    # call game time event handler
+    game_data, active_btns = events.timed_event_handler(game_data, active_btns)
+
     # call user event handler
     run, game_data, active_btns, current_display = events.pygame_event_handler(game_data, active_btns,
                                                                                current_display, btn_locations)
@@ -94,13 +99,11 @@ while run:
     # call renderers
     dis_func.fill_display(display, game_data['light']) # fill screen
     dis_func.display_btns(display, active_btns, btn_images, btn_locations) # display active buttons
-    dis_func.display_tama(display, game_data, current_display, stage_images, stat_images, GAME_FONT)
+    dis_func.display_tama(display, game_data, current_display, stage_images, stat_images, GAME_FONT) # display tama / stats
+    dis_func.display_sick(display, game_data, condition_images, btn_locations['medicine'].topleft)
 
     # update game display
     pygame.display.update()
-
-    # call game time event handler
-    game_data, active_btns = events.timed_event_handler(game_data, active_btns)
 
 # close program
 pygame.quit()

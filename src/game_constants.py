@@ -12,11 +12,13 @@ FONT_SIZE = max(1, int(WIDTH * FONT_SCALE_FACTOR))
 BTN_SCALE_FACTOR = 75 / 1280
 STAT_SCALE_FACTOR = 80 / 1280
 TAMA_SCALE_FACTOR = 200 / 1280
+CONDITION_SCALE_FACTOR = 65 / 1280
 BTN_SIZE = max(1, int(WIDTH * BTN_SCALE_FACTOR))
 STAT_SIZE = max(1, int(WIDTH * STAT_SCALE_FACTOR))
 STAT_ROW_POSITION = ((WIDTH - (STAT_SIZE * 4)) // 2, (HEIGHT - STAT_SIZE) // 2)
 TAMA_SIZE = max(1, int(WIDTH * TAMA_SCALE_FACTOR))
 TAMA_POSITION = (((WIDTH - TAMA_SIZE) // 2), ((HEIGHT - TAMA_SIZE) // 2))
+CONDITION_SIZE = max(1, int(WIDTH * CONDITION_SCALE_FACTOR))
 
 # btn constants
 BTNS_PER_ROW = 4
@@ -38,6 +40,9 @@ STAGE_SPEC_ADULT_PATH = 'adults_special/adult_special_'
 # stat image paths
 STAT_PATH = 'assets/stat_images/'
 STAT_NAMES = ['discipline_empty', 'discipline_filled', 'heart_empty', 'heart_filled']
+# condition image paths
+CONDITION_PATH = 'assets/condition_images/'
+CONDITION_NAMES = ['poo', 'sick']
 
 # define a minute in seconds
 MIN_S = 60

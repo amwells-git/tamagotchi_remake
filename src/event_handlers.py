@@ -2,7 +2,7 @@
 from src.common_imports import *
 
 # extra imports
-from src.save_game import save_game
+from src.save_game import save_game, create_new_game
 
 
 # solve tamagotchi wants
@@ -106,7 +106,7 @@ def btn_event_handler(game_data, active_btns, current_display, btn_name):
         game_data, active_btns = solve_wants(game_data, active_btns, "fake")
     elif btn_name == "attention_wanted" or btn_name == "attention_not_wanted":
         if game_data['stage'] == 'dead':
-            print("Handle Creating A New Save")
+            game_data = create_new_game()
 
     # returns updated game_data, active_btns, and current_display
     return game_data, active_btns, current_display
@@ -199,6 +199,7 @@ def timed_event_handler(game_data, active_btns):
 
 # handle user / pygame events
 def pygame_event_handler(game_data, active_btns, current_display, btn_locations):
+
     # poll events
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -209,6 +210,7 @@ def pygame_event_handler(game_data, active_btns, current_display, btn_locations)
         elif event.type == pygame.MOUSEBUTTONDOWN:
             for btn_name, btn_location in btn_locations.items():
                 if (btn_name in active_btns) and btn_location.collidepoint(event.pos):
+                    print(f"{btn_name} pressed") # TODO: remove debug
                     game_data, active_btns, current_display = btn_event_handler(game_data, active_btns,
                                                                                 current_display, btn_name)
     # return running true and other data
