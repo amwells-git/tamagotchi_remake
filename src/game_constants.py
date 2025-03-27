@@ -1,3 +1,6 @@
+# get common imports
+from src.common_imports import *
+
 # display constants
 WIDTH, HEIGHT = 1280, 720
 FPS = 60
@@ -51,7 +54,7 @@ SPEC_ADULT_AGE = 45
 OLD_AGE_DEATH = 80
 
 # attention timeout
-ATTENTION_TIMEOUT = 2 * MIN_S #TODO: MAKE 15 * MIN_S
+ATTENTION_TIMEOUT = MIN_S #TODO: MAKE 15 * MIN_S
 
 # max heart loss rates
 MAX_HUNGER_LOSS_RATE = 1 * MIN_S #TODO: MAKE 6 * MIN_S
@@ -59,15 +62,44 @@ MAX_HAPPY_LOSS_RATE = 2 * MIN_S #TODO: MAKE 7 * MIN_S
 
 # poop intervals
 # baby stage intervals
-BABY_FIRST_POOP = 15 * MIN_S
-BABY_SECOND_POOP_LOWER = 40 * MIN_S
-BABY_SECOND_POOP_HIGHER = 45 * MIN_S
+BABY_FIRST_POOP = 2 * MIN_S #TODO: MAKE 15 * MIN_S
+BABY_SECOND_POOP_LOWER = 3 * MIN_S #TODO: MAKE 40 * MIN_S
+BABY_SECOND_POOP_HIGHER = 4 * MIN_S #TODO: MAKE 45 * MIN_S
 CHILD_FIRST_POOP = 50 * MIN_S
 FINAL_POOP_INTERVAL = 3 * 60 * MIN_S
 
 # weight limit for determining if to make sick
-WEIGHT_SICK_LIMIT = 30
+WEIGHT_SICK_LIMIT = 50
 
 # lower and upper bounds of higher lower game
 GAME_LOW = 1
 GAME_HIGH = 9
+
+# inital / new game data
+GAME_INIT_DATA = {
+    "age": 0,  # int
+    "stage": "egg",  # str from ["egg", "baby", "child", "teen", "adult", "adult_spec", "dead"]
+    "start_time": 0,  # rounded time.monotonic()
+    "elapsed_time": 0,  # long
+    "save_time": time.time(),  # time.time()
+    "hunger": 4,  # int [0,4]
+    "last_hunger": 0,  # long
+    "happy": 4,  # int [0,4]
+    "last_happy": 0,  # long
+    "discipline": 0,  # int [0,4]
+    "weight": 1,  # int [1,]
+    "poo": 0,  # int [0,] number of poo on screen
+    "last_poo": 0,  # long of last time poo was increased
+    "sick": 0,  # int [0,2] sickness level
+    "teen_ver": 1,  # TODO: will be randomly set between [1,2] for new games
+    "adult_ver": 1,  # TODO: will be randomly set between [1,6] for new games
+    "current_wants": [],
+    # [str,] each string is a specific want from ['hungry', 'unhappy', 'sick', 'sleepy', 'fake']
+    "asleep": False,  # if asleep, used for 'sleepy' want
+    "sleep_start": 20,  # TODO: will be randomly set between [18,23] for new games
+    "sleep_end": 6,  # TODO: will be randomly set between [0,8] for new games
+    "light": True,  # if light is on or off
+    # if -1, that means timeout isn't active
+    # if 'sleep' is -1, allows age to be increased (-2 means isn't active and can be active)
+    "wants_timeouts": {'hungry': -1, 'unhappy': -1, 'sick': -1, 'sleepy': -2, 'fake': -1}
+}
