@@ -35,16 +35,16 @@ If you wish to use the unfinished project as it currently is, you will need to a
 
 Then you will need to add a few images in the `.png` format to some directories:
 1. In `tamagotchi_stages` you will need to add:
-  1. `baby.png`
-  2. `child.png`
-  3. `dead.png`
-  4. `egg.png`
-  5. In `adults` add `adult_1.png`
-  6. In `adults_special` add `adult_special_1.png`
-  7. In `teenagers` add `teenager_1.png`
+    1. `baby.png`
+    2. `child.png`
+    3. `dead.png`
+    4. `egg.png`
+    5. In `adults` add `adult_1.png`
+    6. In `adults_special` add `adult_special_1.png`
+    7. In `teenagers` add `teenager_1.png`
 2. In `condition_images` you will need to add:
-  1. `poo.png`
-  2. `sick.png`
+    1. `poo.png`
+    2. `sick.png`
 
 The `condition_images` are required even though the functionality is not yet implemented as they are loaded by the program when it is run.
 
