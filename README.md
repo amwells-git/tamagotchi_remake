@@ -27,7 +27,7 @@ To keep it simple, the creature's life span is only calculated using the time th
 - Add sickness and bathroom functionality to project.
 - Add background image / design to make project look cleaner
 
-### Using Project In Current State
+## _Using Project In Current State_
 If you wish to use the unfinished project as it currently is, you will need to add a few directories:
 1. One directory on the same level as `src` & `assets` named `game_save`
 2. Two directories on the same level as `btn_images` & `stat_images` named `tamagotchi_stages` & `condition_images` respectively
