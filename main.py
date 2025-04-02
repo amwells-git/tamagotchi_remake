@@ -73,6 +73,9 @@ btn_locations = {
     "attention_not_wanted": btn_images["attention_not_wanted"].get_rect(topleft=(4 * gc.BTN_ROW_BOTTOM[0] - gc.BTN_GAP, gc.BTN_ROW_BOTTOM[1])),
 }
 
+# define poo location list
+poo_locations = []
+
 # define which btns are active
 active_btns = {"food", "light_off", "game", "medicine", "bathroom", "meter", "discipline", "attention_not_wanted"}
 if not game_data['light']:
@@ -100,7 +103,8 @@ while run:
     dis_func.fill_display(display, game_data['light']) # fill screen
     dis_func.display_btns(display, active_btns, btn_images, btn_locations) # display active buttons
     dis_func.display_tama(display, game_data, current_display, stage_images, stat_images, GAME_FONT) # display tama / stats
-    dis_func.display_sick(display, game_data, condition_images, btn_locations['medicine'].topleft)
+    dis_func.display_sick(display, game_data, condition_images, btn_locations['medicine'].topleft) # display sickness icon (if sick)
+    poo_locations = dis_func.display_poo(display, game_data, condition_images, poo_locations)
 
     # update game display
     pygame.display.update()

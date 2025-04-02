@@ -24,7 +24,7 @@ Changes the central display to show statistics about the creature. Will move thr
 To keep it simple, the creature's life span is only calculated using the time the program is running, and as such by closing the program it is held in an effective 'stasis' until the program is run again.
 
 ## Future Work
-- Add sickness and bathroom functionality to project.
+- Add creature images & implement randomized creature versions
 - Add background image / design to make project look cleaner
 
 ## _Using Project In Current State_

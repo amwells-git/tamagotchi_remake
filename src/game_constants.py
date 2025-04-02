@@ -26,6 +26,10 @@ BTN_GAP = (BTN_SIZE // 2)
 BTN_ROW_TOP = ((WIDTH // (BTNS_PER_ROW + 1)), 10)
 BTN_ROW_BOTTOM = ((WIDTH // (BTNS_PER_ROW + 1)), HEIGHT - BTN_SIZE - 10)
 
+# poo area constants
+POO_TOP_LEFT_LIMIT = (BTN_ROW_TOP[0], BTN_ROW_TOP[1] + BTN_SIZE + 10)
+POO_BOTTOM_RIGHT_LIMIT = (BTN_ROW_TOP[0] + 3 * (BTN_ROW_TOP[0] - BTN_GAP), BTN_ROW_BOTTOM[1] - 10)
+
 # file paths
 SAVE_FILE = 'game_save/save_data.json'
 # btn image paths
@@ -74,7 +78,10 @@ CHILD_FIRST_POOP = 50 * MIN_S
 FINAL_POOP_INTERVAL = 3 * 60 * MIN_S
 
 # weight limit for determining if to make sick
-WEIGHT_SICK_LIMIT = 50
+SNACK_SICK_LIMIT = 5
+
+# time decrease by sick (loss rate = limit + ((2 - sick) * NOT_SICK_TIME_INCREASE)
+NOT_SICK_TIME_INCREASE = 2 * MIN_S
 
 # lower and upper bounds of higher lower game
 GAME_LOW = 1
@@ -88,6 +95,7 @@ GAME_INIT_DATA = {
     "elapsed_time": 0,  # long
     "save_time": time.time(),  # time.time()
     "hunger": 4,  # int [0,4]
+    "snacks": 0, # int number of snacks it's had since being fed
     "last_hunger": 0,  # long
     "happy": 4,  # int [0,4]
     "last_happy": 0,  # long

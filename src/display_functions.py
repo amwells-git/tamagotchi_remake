@@ -64,6 +64,25 @@ def display_sick(dis, game_data, condition_images, position):
         dis.blit(condition_images['sick'], (position[0], position[1] + gc.BTN_SIZE + 10))
 
 # display poo
-def display_poo(dis, game_data, condition_images):
-    # TODO: Randomize poo location on screen between button rows
-    pass
+def display_poo(dis, game_data, condition_images, poo_locations):
+    # if poo is greater than poo_locations size, add poo
+    if game_data['poo'] > len(poo_locations):
+        while len(poo_locations) < game_data['poo']:
+            # generate a random x, y location for poo
+            poo_x = random.randint(gc.POO_TOP_LEFT_LIMIT[0], gc.POO_BOTTOM_RIGHT_LIMIT[0])
+            poo_y = random.randint(gc.POO_TOP_LEFT_LIMIT[1], gc.POO_BOTTOM_RIGHT_LIMIT[1])
+            # only use if within poo window limit
+            if (poo_x + gc.CONDITION_SIZE) <= gc.POO_BOTTOM_RIGHT_LIMIT[0] and (poo_y + gc.CONDITION_SIZE) <= gc.POO_BOTTOM_RIGHT_LIMIT[1]:
+                poo_locations.append((poo_x, poo_y))
+    # if poo is less tan poo_locations size, remove poo locations randomly or entirely
+    if game_data['poo'] == 0:
+        poo_locations.clear()
+    elif game_data['poo'] < len(poo_locations):
+        while len(poo_locations) > game_data['poo']:
+            poo_locations.pop(random.randint(0, len(poo_locations) - 1))
+    # display poo
+    for poo_location in poo_locations:
+        dis.blit(condition_images['poo'], poo_location)
+
+    # return updated poo_locations
+    return poo_locations

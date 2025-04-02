@@ -74,9 +74,16 @@ def btn_event_handler(game_data, active_btns, current_display, btn_name):
         if game_data['hunger'] != 4:
             game_data, active_btns = solve_wants(game_data, active_btns, "hungry")
             game_data['hunger'] = 4
+            # reset snack count
+            game_data['snacks'] = 0
         else: # considered a snack
             game_data['happy'] = min(4, game_data['happy'] + 1)
             game_data['weight'] += 2
+            # increase snack count
+            game_data['snacks'] += 1
+            # make sick if over-snacked
+            if game_data['snacks'] >= gc.SNACK_SICK_LIMIT:
+                game_data, active_btns = create_wants(game_data, active_btns, "sick")
     elif btn_name == "light_off" or btn_name == "light_on":
         if game_data['light']:
             game_data, active_btns = solve_wants(game_data, active_btns, "sleepy")
@@ -162,15 +169,15 @@ def timed_event_handler(game_data, active_btns):
         if game_data['elapsed_time'] >= game_data['last_poo'] + gc.FINAL_POOP_INTERVAL:
             game_data['poo'] += 1
             game_data['last_poo'] = game_data['elapsed_time']
-        # hunger loss event
-        if game_data['elapsed_time'] >= game_data['last_hunger'] + gc.MAX_HUNGER_LOSS_RATE:
+        # hunger loss event with sickness time alteration
+        if game_data['elapsed_time'] >= game_data['last_hunger'] + (gc.MAX_HUNGER_LOSS_RATE + ((2 - game_data['sick']) * gc.NOT_SICK_TIME_INCREASE)):
             if game_data['hunger'] > 0:
                 game_data['hunger'] = max(0, game_data['hunger'] - 1)
                 game_data['last_hunger'] = game_data['elapsed_time']
             if game_data['hunger'] <= 1:
                 game_data, active_btns = create_wants(game_data, active_btns, "hungry")
-        # happy loss event
-        if game_data['elapsed_time'] >= game_data['last_happy'] + gc.MAX_HAPPY_LOSS_RATE:
+        # happy loss event with sickness time alteration
+        if game_data['elapsed_time'] >= game_data['last_happy'] + (gc.MAX_HAPPY_LOSS_RATE + ((2 - game_data['sick']) * gc.NOT_SICK_TIME_INCREASE)):
             if game_data['happy'] > 0:
                 game_data['happy'] = max(0, game_data['happy'] - 1)
                 game_data['last_happy'] = game_data['elapsed_time']
@@ -184,8 +191,8 @@ def timed_event_handler(game_data, active_btns):
         if game_data['poo'] > 1 and game_data['elapsed_time'] >= game_data['last_poo'] + round(gc.ATTENTION_TIMEOUT / 2):
             game_data, active_btns = create_wants(game_data, active_btns, "sick")
         # discipline event
-        if game_data['elapsed_time'] >= game_data['last_happy'] + gc.ATTENTION_TIMEOUT:
-            if random.randint(0, 1) and random.randint(game_data['discipline'], 5) < 4:
+        if game_data['elapsed_time'] >= game_data['last_happy'] + gc.ATTENTION_TIMEOUT and random.randint(0, 2000) < 1500:
+            if random.randint(game_data['discipline'], 5) < 4:
                 game_data, active_btns = create_wants(game_data, active_btns, "fake")
 
     elif game_data['stage'] == "egg":  # handle time updates for egg stage
